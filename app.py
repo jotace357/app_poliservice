@@ -6,6 +6,9 @@ app = Flask(__name__)
 from Usuarios import Usuarios
 from reservas import reservas
 from Servicios import Servicios
+from Profesional import Profesional
+from Especialidad import Especialidad
+from Policlinicas import Policlinicas
 
 # solo ping para saber si responde la url y el servicio
 @app.route('/ping', methods=['GET'])
@@ -101,6 +104,33 @@ def editUsuarios(usuario_dni):
     return jsonify({"cod_retorno":"01" ,"detalle":"No se encontro usuario"})
 
 
+@app.route('/Policlinicas')
+def getPoliclinicas():
+    print("llamada a getPoliclinicas (/Policlinicas)")
+    return jsonify({"Policlinicas": Policlinicas, "cod_retorno":"00" ,"detalle":"Proceso Ok"})
+    # poliEncontradas = [ pol for pol in Policlinicas ]
+    # if (poliEncontradas > 0):
+    #     return jsonify({"Policlinicas": poliEncontradas,"cod_retorno":"00" ,"detalle":"Proceso Ok"})
+    # return jsonify({"cod_retorno":"01" ,"detalle":"No se encontraron policlinicas"})
+
+@app.route('/Especialidades')
+def getEspecialidades():
+    print("llamada a getEspecialidades (/Especialidades)")
+    return jsonify({"Especialidades": Especialidad, "cod_retorno":"00" ,"detalle":"Proceso Ok"})
+    # espEncontradas = [esp for esp in Especialidad]
+    # if (espEncontradas > 0):
+    #     return jsonify({"Especialidades": espEncontradas,"cod_retorno":"00" ,"detalle":"Proceso Ok"})
+    # return jsonify({"cod_retorno":"01" ,"detalle":"No se encontraron especialidades"})
+
+@app.route('/Profesionales')
+def getProfesionales():
+    print("llamada a getProfesionales (/Profesionales)")
+    return jsonify({"Especialidades": Profesional, "cod_retorno":"00" ,"detalle":"Proceso Ok"})
+    # proFound = [ pro for pro in Profesional]
+    # if (proFound > 0):
+    #     return jsonify({"Prodesionales": proFound,"cod_retorno":"00" ,"detalle":"Proceso Ok"})
+    # return jsonify({"cod_retorno":"01" ,"detalle":"No se encontraron Profesionales"})
+
 # Devuelve los servicios segun policlinica, esencialidad y medico
 @app.route('/Servicios/<string:policlinica>/<string:especialidad>/<string:medico>', methods=['GET'])
 def getServicios(policlinica, especialidad, medico ):
@@ -149,6 +179,6 @@ def getReservaUsuario(idusuario):
     return jsonify({"Reservas": reservasFound,"Servicios": servFound, "cod_retorno":"00" ,"detalle":"Proceso Ok"})
 
 if __name__ == '__main__':
-    #app.run(host="192.168.1.2", port=4000,debug=True)
-    app.run(host="0.0.0.0", port=4000,debug=True)
+    app.run(host="192.168.1.2", port=4000,debug=True)
+    #app.run(host="0.0.0.0", port=4000,debug=True)
     
